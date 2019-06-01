@@ -1,9 +1,8 @@
 scriptencoding utf-8
-" ^^ Please leave the above line at the start of the file.
-
+" Please leave the above line at the start of the file.
 " Default configuration file for Vim
 
-" {{{ General settings
+" General settings
 set nocompatible        " Use Vim defaults (much better!)
 set bs=2                " Allow backspacing over everything in insert mode
 set noai                " Always set auto-indenting off
@@ -15,7 +14,9 @@ set wildmenu            " visual autocomplete for command menu
 set lazyredraw          " redraw only when we need to.
 set showmatch           " highlight matching [{()}]
 set incsearch           " search as characters are entered
+set updatetime=100      " gitclutter faster
 
+"key settings
 let mapleader=","       " leader is comma
 
 " Tab Settings
@@ -30,14 +31,12 @@ call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
-
-
-
-
 " COLORS
-colorscheme herald	" awesome colorscheme
+colorscheme herald	"awesome colorscheme
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -54,15 +53,6 @@ if v:version >= 700
   set number
   set numberwidth=3
 endif
-" }}}
-
-" {{{ Modeline settings
-" We don't allow modelines by default. See bug #14088 and bug #73715.
-" If you're not concerned about these, you can enable them on a per-user
-" basis by adding "set modeline" to your ~/.vimrc file.
-set nomodeline
-" }}}
-
 
 " Always check for UTF-8 when trying to determine encodings.
 if &fileencodings !~? "utf-8"
@@ -77,24 +67,29 @@ endif
 if &fileencodings !~? "default"
   set fileencodings+=default
 endif
-" }}}
 
-" {{{ Syntax highlighting settings
+" Syntax highlighting settings
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
 if &t_Co > 2 || has("gui_running")
   syntax on
   set hlsearch
-  " turn off search highlight
-nnoremap <leader><space> :nohlsearch<CR>
-
+  nnoremap <leader><space> :nohlsearch<CR> "turn off search highlight
 endif
-" }}}
 
 
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "FIXES
 
-" {{{ Terminal fixes
+" Modeline settings
+" We don't allow modelines by default. See bug #14088 and bug #73715.
+" If you're not concerned about these, you can enable them on a per-user
+" basis by adding "set modeline" to your ~/.vimrc file.
+set nomodeline
+
+" Terminal fixes
 if &term ==? "xterm"
   set t_Sb=^[4%dm
   set t_Sf=^[3%dm
@@ -110,7 +105,7 @@ if &term ==? "gnome" && has("eval")
 endif
 " }}}
 
-" {{{ Fix &shell, see bug #101665.
+" Fix &shell, see bug #101665.
 if "" == &shell
   if executable("/bin/bash")
     set shell=/bin/bash
@@ -118,11 +113,9 @@ if "" == &shell
     set shell=/bin/sh
   endif
 endif
-"}}}
 
-" {{{ Our default /bin/sh is bash, not ksh, so syntax highlighting for .sh
+" Our default /bin/sh is bash, not ksh, so syntax highlighting for .sh
 " files should default to bash. See :help sh-syntax and bug #101819.
 if has("eval")
   let is_bash=1
 endif
-" }}}
