@@ -26,6 +26,13 @@ set autoindent
 set sts=2
 set et     "expand tabs to spaces
 
+" Uncomment the following to have Vim jump to the last position when                                                       
+" reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
 "PLUGINS
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
@@ -33,10 +40,44 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-scripts/vim-auto-save'
 call plug#end()
 
-" COLORS
+" COLORS and look
 colorscheme herald	"awesome colorscheme
+set guifont=Source\ Code\ Pro\ for\ Powerline:h14
+
+
+" Status Bar
+let g:airline_powerline_fonts = 1 "status bar
+let g:airline_theme='bubblegum'   "theme
+set laststatus=2                  "erzwingen
+let g:airline_symbols = {}
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.dirty='->[+]'
+let g:airline_section_y='%Y'
+let g:airline_section_c='%t %M'
+let g:airline_section_x=''
+let g:airline_mode_map = {
+\ '__' : '-',
+\ 'c'  : 'C',
+\ 'i'  : 'I',
+\ 'ic' : 'I',
+\ 'ix' : 'I',
+\ 'n'  : 'N',
+\ 'ni' : 'N',
+\ 'no' : 'N',
+\ 'R'  : 'R',
+\ 'Rv' : 'R',
+\ 's'  : 'S',
+\ 'S'  : 'S',
+\ '' : 'S',
+\ 't'  : 'T',
+\ 'v'  : 'V',
+\ 'V'  : 'V',
+\ '' : 'V',
+\ }
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
